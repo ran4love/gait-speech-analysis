@@ -1,0 +1,3 @@
+# Install PyTorch for your CUDA/CPU platform first:
+# https://pytorch.org/get-started/locally/
+whisperx

@@ -1,0 +1,9 @@
+data/*
+!data/templates/
+!data/templates/**
+results/
+config.ini
+*.log
+__pycache__/
+*.pyc
+.DS_Store
