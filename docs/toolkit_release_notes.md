@@ -1,3 +1,11 @@
+# ADualNet 0.4.1
+
+Date: 2026-11-02
+
+- Prevent response-action buttons from wrapping character-by-character in narrow review columns; overflow remains within the response table.
+- Version static assets to avoid stale browser caches after release updates.
+- No changes to inference, measurement definitions, feature computation or statistical analysis. The v0.4.0 release is preserved.
+
 # ADualNet 0.4.0
 
 ## Public synthetic demonstration (2026-11-01)

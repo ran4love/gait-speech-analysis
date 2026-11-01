@@ -52,7 +52,7 @@ def build(out):
         for path in files:
             archive.write(path, "adualnet/" + path.relative_to(ROOT).as_posix())
         archive.writestr("adualnet/RELEASE_MANIFEST.json", json.dumps({
-            "release": "0.4.0", "source_only": True,
+            "release": "0.4.1", "source_only": True,
             "license_selected": (ROOT / "LICENSE").exists(), "files": inventory,
             "excluded": ["git history", "participant data", "local workspace", "results", "model weights", "caches"],
         }, indent=2))
@@ -61,6 +61,6 @@ def build(out):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", default=str(ROOT / "dist/adualnet-toolkit-0.4.0.zip"))
+    parser.add_argument("--out", default=str(ROOT / "dist/adualnet-toolkit-0.4.1.zip"))
     args = parser.parse_args()
     build(args.out)

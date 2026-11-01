@@ -73,6 +73,12 @@ class PublicDemoTests(unittest.TestCase):
         self.assertIn("Permission is hereby granted", (ROOT / "LICENSE").read_text())
         self.assertNotIn("not yet selected", (ROOT / "LICENSE_NOTICE.md").read_text())
 
+    def test_response_action_labels_do_not_break_into_vertical_letters(self):
+        css = (PUBLIC / "assets/demo.css").read_text()
+        rule = re.search(r"\.row-actions button\{([^}]+)\}", css).group(1)
+        self.assertIn("white-space:nowrap", rule)
+        self.assertIn("flex-shrink:0", rule)
+
 
 if __name__ == "__main__":
     unittest.main()
