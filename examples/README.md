@@ -1,5 +1,10 @@
 # Example Folder Layout
 
+`synthetic_features.csv` is generated entirely from random numbers by
+`adualnet_toolkit.analysis.make_demo`. All IDs start with SYNTHETIC. It has no
+study participants and can be used to test upload/preflight functionality.
+The command `python adualnet.py demo` generates this artificial input locally.
+
 The public code expects this layout by default:
 
 ```text

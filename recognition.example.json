@@ -1,0 +1,25 @@
+{
+  "profile_version": "local_video_review_v1",
+  "execution": {"mode": "local"},
+  "ffmpeg": "ffmpeg",
+  "ffprobe": "ffprobe",
+  "analysis_fps": 30,
+  "max_duration_s": 600,
+  "mmpose": {
+    "python": "{current_python}",
+    "pose2d": "human",
+    "pose2d_weights": "",
+    "det_model": "",
+    "det_weights": "",
+    "device": "cpu",
+    "bbox_thr": 0.3
+  },
+  "whisper": {
+    "python": "{current_python}",
+    "backend": "faster-whisper",
+    "model": "small",
+    "language": "zh",
+    "device": "cpu",
+    "compute_type": "int8"
+  }
+}

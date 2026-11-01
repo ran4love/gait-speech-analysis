@@ -1,0 +1,48 @@
+{
+  "registry_version": "1.0.0",
+  "scope": "Read-only schema and version preflight; never certifies physiological validity, source identity or study admission.",
+  "cross_profile_equivalence": false,
+  "profiles": {
+    "toolkit_table_v03": {
+      "role": "Generic cohort-table interface, not a certified measurement definition",
+      "metadata": ["ID", "label"],
+      "demographics": ["age", "sex", "edu"],
+      "gait": ["walking_speed", "cadence", "average_step_length", "average_stride_length", "average_step_time", "average_stride_time", "step_length_variability", "stride_length_variability", "step_time_variability", "stride_time_variability", "average_step_assymetry", "average_stride_assymetry", "stance_times", "swing_times", "double_support_times"],
+      "speech": ["Timecount_DT", "Num_DT", "Correct_Num_DT", "Num_20s_DT", "Correct_Num_20s_DT", "Correct_persec_DT", "ACC_DT", "Timecount_DT_1stNum"],
+      "supported_missingness": "Individual missing measurements may be imputed only inside authorized training folds. An entirely unavailable required field blocks this fixed interface.",
+      "needs": "Study-specific measurement protocol, units, source/task correspondence, sex coding and outcome definition",
+      "source": "src/domain_ablation_analysis.py::DOMAIN_SPECS; adualnet_toolkit/analysis.py::prepare_table"
+    },
+    "video_review_v1": {
+      "role": "Reviewed single-recording export; not a cohort-ready model input",
+      "known_measurement_version": "video_review_frameinterval_v1+reviewed_response_onset_counts_v1",
+      "metadata": ["ID", "measurement_version", "review_revision", "synthetic"],
+      "demographics": [],
+      "gait": ["average_step_length", "average_stride_length", "step_length_variability", "stride_length_variability", "average_step_time", "average_stride_time", "step_time_variability", "stride_time_variability", "average_step_assymetry", "average_stride_assymetry", "walking_speed", "cadence", "stance_times", "swing_times", "double_support_times"],
+      "speech": ["Timecount_DT", "Num_DT", "Correct_Num_DT", "Num_20s_DT", "Correct_Num_20s_DT", "Correct_persec_DT", "ACC_DT", "Timecount_DT_1stNum"],
+      "structurally_unavailable": ["stance_times", "swing_times", "double_support_times"],
+      "spatial_units": "image pixels; not calibrated metric step lengths",
+      "event_boundary": "heuristic ankle events; step=stride/2 by construction, not independent foot-contact validation",
+      "speech_definition": "Reviewer-organized response rows and manual correctness; task and first20s intervals are left-closed/right-open; zero-response accuracy/latency are missing",
+      "source": "adualnet_toolkit/video.py::export_features; adualnet_toolkit/speech.py::extract_reviewed_speech"
+    },
+    "historical_2606_primary": {
+      "role": "Historical25-predictor table, provenance qualifications apply; not a prospective extraction specification",
+      "metadata": ["ID", "label"],
+      "demographics": ["edu", "age"],
+      "gait": ["average_step_length", "average_stride_length", "step_length_variability", "stride_length_variability", "average_step_time", "average_stride_time", "step_time_variability", "stride_time_variability", "average_step_assymetry", "average_stride_assymetry", "walking_speed", "cadence", "stance_times", "swing_times", "double_support_times"],
+      "speech": ["ACC_DT", "Correct_persec_DT", "Correct_Num_DT", "Num_DT", "Timecount_DT", "Timecount_DT_1stNum", "Num_20s_DT", "Correct_Num_20s_DT"],
+      "additional_domain_demographic": "gender (not one of the25 primary predictors)",
+      "source": "docs/adualnet_2606_feature_contract.json"
+    },
+    "temporal_audit_20261031": {
+      "role": "Separate locked7+6+2 panel; not implemented as a workbench classifier interface",
+      "metadata": ["ID", "label"],
+      "demographics": ["age", "edu"],
+      "gait": ["mobility_elapsed_s", "straight_elapsed_s", "out_return_duration_asymmetry_pct", "step_interval_mean_s", "step_interval_sd_s", "stride_interval_sd_s", "step_interval_lr_asymmetry_pct"],
+      "speech": ["speech_response_count", "speech_correct_count", "speech_accuracy", "speech_correct_per_second", "speech_task_duration_s", "speech_first_response_s"],
+      "source": "Separately registered outcome-blind measurement protocol; no data, models or outputs bundled here",
+      "missingness_boundary": "No-response accuracy0, latency missing; both20s fields uniformly withheld. This differs from reviewed-speech zero-response accuracy semantics."
+    }
+  }
+}

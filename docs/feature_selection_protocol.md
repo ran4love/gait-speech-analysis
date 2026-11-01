@@ -108,6 +108,77 @@ must be tuned either before the final evaluation on an independent discovery set
 or inside an inner CV loop nested within each outer training fold. Do not choose
 `k` based on outer-fold test performance.
 
+For robustness reporting, the repository includes a top-k sensitivity script:
+
+```bash
+python scripts/run_nested_k_sensitivity.py \
+  --input data/processed/dataset_2606.xlsx \
+  --sheet-name info \
+  --out-dir results/nested_k_sensitivity \
+  --k-values 5,10,14,20
+```
+
+This script reruns the same leakage-controlled nested feature-selection protocol
+separately for each fixed k. The resulting performance table and AUROC plot
+should be interpreted as sensitivity analyses, not as a post hoc rule for
+choosing the final k.
+
+To treat `k` as a true tuned hyperparameter, use inner-CV tuning inside each
+outer training fold:
+
+```bash
+python scripts/run_nested_k_innercv_tuning.py \
+  --input data/processed/dataset_2606.xlsx \
+  --sheet-name info \
+  --out-dir results/innercv_k_tuning \
+  --k-values 5,10,14,20 \
+  --selection-rules max_auc,within_margin \
+  --within-margin 0.01
+```
+
+`max_auc` selects the k with the highest mean inner-CV AUROC. `within_margin`
+selects the smallest k within a prespecified AUROC margin of the best inner-CV
+k, and should only be described as a parsimony rule. This inner-CV output is
+the appropriate analysis for claims that k was tuned from training data.
+
+## Domain Ablation Feature Selection
+
+The domain-ablation workflow is available through:
+
+```bash
+python run_pipeline.py --config config.ini --step domain-ablation
+```
+
+It compares:
+
+```text
+demographics-only
+gait-only
+speech-only
+gait + speech
+gait + speech + demographics
+```
+
+This is a full-cohort within-task analysis using the same dual-task TUG-DT
+modeling table. It is not external validation and not task-only validation.
+
+For each feature set and outer fold, feature ranking is repeated inside the
+training fold only using `abs(training_univariate_AUROC - 0.5)`. The selected
+feature count is `min(select_k_cap, available_features)`, so small domains such
+as `speech-only` and `demographics-only` use all available features when their
+domain size is below `select_k_cap`.
+
+The held-out fold is never used for domain feature ranking, top-k selection,
+imputation fitting, scaling fitting or model fitting. The domain-ablation output
+also includes same-fold paired Delta AUROC comparisons for:
+
+```text
+full model vs gait + speech
+full model vs demographics-only
+gait + speech vs demographics-only
+speech-only vs gait-only
+```
+
 ## Older Exploratory Scripts
 
 The following scripts contain forward-selection utilities and are retained as

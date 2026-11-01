@@ -42,6 +42,14 @@ sheet_name = age-edu
 feature_set = nestedselected
 run_nested_feature_selection = yes
 promote_nested_selection = yes
+
+[domain_ablation]
+input_table = data/paper_modeling_dataset.xlsx
+sheet_name = age-edu
+
+[figures]
+domain_results_dir = results/domain_ablation
+paper_results_dir = results/paper_experiments
 ```
 
 如果没有 MoCA 分数：
@@ -92,7 +100,27 @@ python run_pipeline.py --config config.ini --step paper-experiments
 | `results/paper_experiments/classification/confounder_adjustment/` | 年龄、教育、性别混杂因素校正。 |
 | `results/paper_experiments/regression/` | MoCA/MMSE 等回归结果，和分类分开。 |
 
-## 5. 推荐报告方式
+## 5. 跑 domain ablation 和新版 Fig.4
+
+如果需要复现“不同信息域贡献”和新版 Fig.4：
+
+```bash
+python run_pipeline.py --config config.ini --step domain-ablation
+python run_pipeline.py --config config.ini --step figures
+```
+
+主要输出：
+
+| 输出 | 含义 |
+| --- | --- |
+| `results/domain_ablation/domain_ablation_performance_table.xlsx` | demographics-only、gait-only、speech-only、gait+speech、full model 的性能表。 |
+| `results/domain_ablation/domain_ablation_paired_delta_auroc.xlsx` | 同一 CV fold 内的 paired Delta AUROC。 |
+| `results/domain_ablation/domain_ablation_protocol.json` | 样本量、特征分组、无泄漏流程和 QC 摘要。 |
+| `results/figures/fig4_model_contribution_interpretability.svg` | 新版 Fig.4，含 domain ablation、paired Delta AUROC、RF contribution 和 nested recurrence。 |
+
+这部分是 full-cohort within-task domain ablation，不是 external validation，也不是 single-task validation。
+
+## 6. 推荐报告方式
 
 分类主结果优先报告：
 

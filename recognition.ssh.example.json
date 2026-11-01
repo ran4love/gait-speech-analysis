@@ -1,0 +1,29 @@
+{
+  "profile_version": "ssh_video_review_v1",
+  "execution": {
+    "mode": "ssh",
+    "ssh_argv": ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", "research-server"],
+    "remote_root": ".cache/adualnet_workbench/video_jobs"
+  },
+  "ffmpeg": "ffmpeg",
+  "ffprobe": "ffprobe",
+  "analysis_fps": 30,
+  "max_duration_s": 600,
+  "mmpose": {
+    "python": "/opt/conda/envs/openmmlab/bin/python",
+    "pose2d": "human",
+    "pose2d_weights": "",
+    "det_model": "",
+    "det_weights": "",
+    "device": "cuda",
+    "bbox_thr": 0.3
+  },
+  "whisper": {
+    "python": "/opt/conda/envs/whisper/bin/python",
+    "backend": "faster-whisper",
+    "model": "large-v2",
+    "language": "zh",
+    "device": "cuda",
+    "compute_type": "float16"
+  }
+}

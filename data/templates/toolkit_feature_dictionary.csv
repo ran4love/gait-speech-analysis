@@ -1,0 +1,27 @@
+column,domain,required,definition
+age,demographics,True,Record measurement and unit in your study protocol
+sex,demographics,True,Record measurement and unit in your study protocol
+edu,demographics,True,Record measurement and unit in your study protocol
+walking_speed,gait,True,Record measurement and unit in your study protocol
+cadence,gait,True,Record measurement and unit in your study protocol
+average_step_length,gait,True,Record measurement and unit in your study protocol
+average_stride_length,gait,True,Record measurement and unit in your study protocol
+average_step_time,gait,True,Record measurement and unit in your study protocol
+average_stride_time,gait,True,Record measurement and unit in your study protocol
+step_length_variability,gait,True,Record measurement and unit in your study protocol
+stride_length_variability,gait,True,Record measurement and unit in your study protocol
+step_time_variability,gait,True,Record measurement and unit in your study protocol
+stride_time_variability,gait,True,Record measurement and unit in your study protocol
+average_step_assymetry,gait,True,Record measurement and unit in your study protocol
+average_stride_assymetry,gait,True,Record measurement and unit in your study protocol
+stance_times,gait,True,Record measurement and unit in your study protocol
+swing_times,gait,True,Record measurement and unit in your study protocol
+double_support_times,gait,True,Record measurement and unit in your study protocol
+Timecount_DT,speech,True,Record measurement and unit in your study protocol
+Num_DT,speech,True,Record measurement and unit in your study protocol
+Correct_Num_DT,speech,True,Record measurement and unit in your study protocol
+Num_20s_DT,speech,True,Record measurement and unit in your study protocol
+Correct_Num_20s_DT,speech,True,Record measurement and unit in your study protocol
+Correct_persec_DT,speech,True,Record measurement and unit in your study protocol
+ACC_DT,speech,True,Record measurement and unit in your study protocol
+Timecount_DT_1stNum,speech,True,Record measurement and unit in your study protocol

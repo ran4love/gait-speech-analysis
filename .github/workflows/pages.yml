@@ -1,0 +1,37 @@
+name: Publish synthetic online demo
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  validate-and-publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: python -m pip install -r requirements-toolkit.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python scripts/build_public_demo_fixture.py --check
+      - run: node tests/public_demo_checks.js /tmp/adualnet-demo-check.xlsx
+      - run: python -c "import openpyxl; w=openpyxl.load_workbook('/tmp/adualnet-demo-check.xlsx'); assert w['Features']['B2'].value == 0.75; assert w['Review']['A2'].value == '七十八'; assert w['Review']['A3'].data_type == 's'"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public_demo
+      - id: deploy
+        uses: actions/deploy-pages@v4

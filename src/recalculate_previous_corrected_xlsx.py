@@ -216,17 +216,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Create corrected previous-vs-recalculated xlsx.")
     parser.add_argument(
         "--previous-xlsx",
-        default="/Users/Reese/Documents/my codex project/gait/check_previous.xlsx",
+        required=True,
         help="Path to previous xlsx.",
     )
     parser.add_argument(
         "--corrected-json",
-        default="/Users/Reese/Documents/my codex project/gait/gait_features_pred_2025_without_ds_corrected.json",
+        required=True,
         help="Path to corrected json produced by gaitfeature.py without_ds_json.",
     )
     parser.add_argument(
         "--output-xlsx",
-        default="/Users/Reese/Documents/my codex project/gait/check_previous_corrected_recalculated.xlsx",
+        required=True,
         help="Output corrected xlsx path.",
     )
     args = parser.parse_args()

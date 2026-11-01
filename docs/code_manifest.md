@@ -14,6 +14,9 @@
 | `scripts/extract_speech_features.py` | Extracts Serial-7 speech metrics from WhisperX JSON. |
 | `scripts/reproduce_experiments.py` | Reproduces the exploratory gait-speech joint analysis through `src/legacy_exploratory/`. |
 | `scripts/reproduce_paper_experiments.py` | Reproduces manuscript-level model benchmark, nested feature-selection benchmark, OOF ROC, and SHAP outputs. |
+| `scripts/run_domain_ablation.py` | Runs full-cohort within-task domain ablation across demographics, gait and speech domains. |
+| `scripts/make_paper_figures.py` | Generates Fig. 4 model contribution and interpretability from existing result tables. |
+| `scripts/run_statistical_analysis.py` | Runs Python-only baseline, group-difference and correlation statistics with Nature-style figures. |
 | `scripts/qc_gait_xlsx.py` | Builds a physics-informed QC xlsx report. |
 
 ## Core Source Code
@@ -24,6 +27,9 @@
 | `src/whisperx_recognize.py` | WhisperX ASR script with task-specific presets. |
 | `src/speech_feature_extract.py` | Serial-7 speech feature extractor. |
 | `src/paper_experiment_reproduction.py` | Paper-level repeated-CV classification, AdaBoost/RF/SVM(RBF)/DT all-features/Nested-selected publication table, nested training-fold-only feature selection, confusion matrix, ROC, calibration curve, confounder adjustment, bootstrap CI, SHAP, and separate regression reproduction. |
+| `src/domain_ablation_analysis.py` | Full-cohort within-task domain ablation with nested training-fold-only feature selection, paired Delta AUROC, QC summary, and domain-ablation figures. |
+| `src/figure_model_contribution_interpretability.py` | Generates Fig. 4 with domain ablation AUROC, paired Delta AUROC, RF feature contribution, and nested feature recurrence. |
+| `src/statistical_analysis_python.py` | Python-only replacement for historical R scripts: baseline p-values, feature group tests, automatic Pearson/Spearman correlations, FDR tables, and Nature-style SVG/PDF/PNG/TIFF figures. |
 | `src/analyze_new_data_check.py` | Lightweight ML and cross-validation utilities. |
 | `src/qc_check_previous_2026.py` | Gait xlsx QC rules and report builder. |
 | `src/compare_gait_metrics_to_xlsx.py` | Minimal xlsx read/write helpers and metric comparison utilities. |
@@ -48,4 +54,5 @@ The public package does not include videos, audio, patient demographics, labels,
 | File | Purpose |
 | --- | --- |
 | `docs/feature_selection_protocol.md` | Documents Nested-selected feature provenance, historical ADual-selected fallback, nested feature-selection outputs, and leakage-control rules. |
+| `docs/domain_ablation_and_fig4.md` | Documents full-cohort within-task domain ablation and Fig. 4 reproduction. |
 | `docs/minimal_paper_reproduction_zh.md` | Chinese guide for reproducing paper models from one `paper_modeling_dataset.xlsx`. |

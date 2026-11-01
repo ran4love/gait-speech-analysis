@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADualNet · Local Research Workbench</title>
+<link rel="stylesheet" href="/assets/workspace.css?token=__LOCAL_TOKEN__">
+</head>
+<body>
+<aside class="sidebar">
+<div class="brand-row"><span class="brand-mark"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 23 7-9 5 4 6-11M7 23l8 2 4-7M14 14l-3-7"/><circle cx="11" cy="7" r="2"/><circle cx="25" cy="7" r="2"/><circle cx="7" cy="23" r="2"/></svg></span><div><div class="brand">ADualNet</div><div class="brand-subtitle">双任务步态与语音研究平台</div></div></div>
+<div class="nav-label">研究工作区</div>
+<div class="module-bar">
+<nav class="tabs" aria-label="工作流程">
+<button data-tab="video-panel" aria-label="从一个视频开始" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3M8 9l4 3-4 3Z"/></svg><span>从一个视频开始</span><small>姿态、转写与人工核查</small></button>
+<button data-tab="demo" aria-label="模型演示" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h16M8 15l4-5 4 2 4-7"/></svg><span>模型演示</span><small>合成队列与统计流程</small></button>
+<button data-tab="data" aria-label="我的特征表" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10M15 10v10"/></svg><span>我的特征表</span><small>研究队列的特征分析</small></button>
+<button data-tab="raw" aria-label="高级入口" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-5 3 2-16"/></svg><span>高级入口</span><small>环境设置与测量说明</small></button>
+</nav>
+</div>
+<div class="sidebar-bottom"><div class="sidebar-note"><strong>研究用途，非临床诊断</strong><span>人工核查不可省略。请按所在机构的研究与数据治理要求使用。</span></div><div class="sidebar-version">ADualNet / v0.4.0</div></div>
+</aside>
+<div class="app-shell">
+<header class="topbar"><div class="breadcrumb"><span>研究工作区</span><span aria-hidden="true">/</span><strong>TUG-DT</strong></div><div class="header-tools"><span class="research-tag">仅供科研</span><div class="language-switch" role="group" aria-label="界面语言"><button type="button" data-language="zh" aria-pressed="false" lang="zh-CN">中文</button><button type="button" data-language="en" aria-pressed="true" lang="en">English</button></div></div></header>
+<main>
+<section class="page-heading reveal"><div><h1 id="workspace-title">步态与语音分析</h1><p>从同步视频到经人工核查的研究特征，保留每一步的测量与审阅记录。</p></div><div class="heading-actions"><span class="stage-pill" id="workspace-stage" data-workspace-stage role="status" data-state="idle">等待上传</span><button class="secondary" id="jump-review" disabled>前往人工核查</button></div></section>
+<div class="protocol-strip">
+<div><small>当前任务状态</small><strong class="summary-stage" data-workspace-stage data-state="idle">等待上传</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4 8 9 8 9s8-5 8-9V6ZM8 12l3 3 5-6"/></svg></div>
+<div><small>分析模态</small><strong>Gait + speech</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg></div>
+<div><small>核查要求</small><strong>双重人工确认</strong><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></div>
+<div><small>结果格式</small><strong class="export-formats">XLSX / CSV / JSON</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5ZM15 3v5h4M9 12h6M9 16h6"/></svg></div>
+</div>
+<section class="panel reveal" id="video-panel">
+<div class="section-heading"><div><p class="section-kicker">视频分析</p><h2>新建分析</h2><p>上传自己的录像，或从合成演示开始。</p></div></div>
+<ol class="workflow-progress" aria-label="视频处理流程">
+<li data-workflow-step="0" data-progress="current" aria-current="step"><span class="step-index">01</span><div><strong>上传视频</strong><small>同步视听数据</small></div></li>
+<li data-workflow-step="1" data-progress="pending"><span class="step-index">02</span><div><strong>姿态与转写</strong><small>自动识别与保留原始结果</small></div></li>
+<li data-workflow-step="2" data-progress="pending"><span class="step-index">03</span><div><strong>人工核查</strong><small>人物、时窗与回答</small></div></li>
+<li data-workflow-step="3" data-progress="pending"><span class="step-index">04</span><div><strong>特征与 QC</strong><small>版本化导出</small></div></li>
+</ol>
+<div class="grid"><div class="surface-card upload-card"><div class="card-heading"><span class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/></svg></span><div><h3>选择研究录像</h3><span class="card-caption">视频与语音来自同一次双任务评估</span></div></div><p>上传含同步语音的 TUG-DT 视频，自动准备音频，执行 MMPose 与 Whisper，再进入人工确认窗口。</p><label for="video-file">视频文件 · MP4 / MOV / MKV / AVI / WebM · 最大 512 MB</label><input type="file" id="video-file" accept="video/*,.mkv,.avi" hidden><div class="file-picker"><div class="upload-symbol"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h12l6 6v18H7Z M19 4v7h6M16 23V14m-4 4 4-4 4 4"/></svg></div><button type="button" class="secondary" id="video-file-pick">选择视频</button><span id="video-file-name" aria-live="polite">未选择文件</span></div><label class="check"><input type="checkbox" id="video-transfer-confirm"><span>已确认本研究允许处理该录像；若配置远程识别，允许将视频与音频传至该服务器，并在两端保留。</span></label><div class="actions"><button id="video-start">上传并开始识别</button><button id="video-demo" class="secondary">体验人工核查演示</button></div></div><div class="surface-card environment-card"><div class="card-heading"><span class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01M12 7h5M12 17h5"/></svg></span><h3>识别环境</h3></div><p class="muted">MMPose 与 Whisper 可使用不同的 Python 环境，由 recognition.local.json 指定。支持本机或 SSH 服务器，不在网页输入密码。</p><button class="secondary" id="video-env">检查识别环境</button><p id="video-environment" aria-live="polite"></p><div class="tip">人工核查演示使用合成视频和注释，无需识别模型。真实识别需要安装 MMPose 和 faster-whisper 或 WhisperX。</div></div></div>
+<p id="video-status" role="status"></p><details class="technical-log"><summary>处理日志（原始）</summary><pre id="video-log" hidden></pre></details>
+<div id="video-review" hidden>
+<div class="review-notice" id="video-scope"></div>
+<div class="video-grid card"><div><h3>1. 同步视频与姿态核查</h3><div class="video-wrap"><video id="review-video" controls preload="metadata"></video><canvas id="pose-canvas"></canvas></div><p id="frame-info" class="mini"></p><div class="track-controls"><button class="secondary" id="frame-back">前一帧</button><button class="secondary" id="frame-forward">后一帧</button><label for="person-track">参与者轨迹</label><select id="person-track"></select></div>
+<div class="small-fields"><div><label for="review-participant">本地参与者编号</label><input id="review-participant" placeholder="填写去标识编号"></div><div><label for="reviewer">核查者姓名或代码</label><input id="reviewer"></div>
+<div><label for="task-start">语音任务开始（视频秒）</label><input type="number" id="task-start" step="0.01" min="0"></div><div><label for="task-end">语音任务结束（视频秒）</label><input type="number" id="task-end" step="0.01" min="0"></div>
+<div><label for="gait-start">步态分析开始（视频秒）</label><input type="number" id="gait-start" step="0.01" min="0"></div><div><label for="gait-end">步态分析结束（视频秒）</label><input type="number" id="gait-end" step="0.01" min="0"></div></div>
+<label for="route-distance">选中步态时窗的已知路线长度（米，可留空）</label><input type="number" id="route-distance" min="0.01" step="0.01" placeholder="未测量则留空，不推算米制步长">
+<details class="card"><summary>修正当前帧关键点 / 人物轨迹</summary><p class="mini">暂停到待修正帧，选择关节点并输入分析视频的像素坐标。修改会留在审阅版本中，原始识别结果保留。</p><label for="joint-select">关节点（COCO-17）</label><select id="joint-select"></select><div class="small-fields"><div><label for="joint-x">X 像素</label><input type="number" id="joint-x" step="0.1"></div><div><label for="joint-y">Y 像素</label><input type="number" id="joint-y" step="0.1"></div></div><div class="actions"><button class="secondary" id="apply-joint">应用关键点修正</button><button class="secondary" id="exclude-frame">排除当前帧</button><button class="secondary" id="restore-frame">恢复当前帧</button></div><label for="frame-track">仅当前帧使用轨迹</label><select id="frame-track"></select><button class="secondary" id="apply-track">应用当前帧轨迹</button><p id="edit-summary" class="mini"></p></details>
+</div><div><h3>2. 逐条核对转录与真实回答</h3><p class="mini">自动分词只提供候选；一个词不一定等于一次回答。可增删、拆分或合并为真实回答，排除检查者提示。每个计入的回答都需人工选“正确/错误”。</p>
+<details><summary>查看 Whisper 原始转录</summary><pre id="original-transcript"></pre></details>
+<label for="corrected-transcript">人工修正的完整转录（保留核查记录）</label><textarea id="corrected-transcript"></textarea>
+<div class="response-table"><table><thead><tr><th>计入</th><th>起始秒</th><th>回答文本</th><th>正确性</th><th>回放 / 删除</th></tr></thead><tbody id="response-rows"></tbody></table></div><button class="secondary" id="add-response">增加一个回答</button>
+<label for="scoring-rule">正确性评分规则</label><textarea id="scoring-rule" placeholder="例如：按逐次减七判断；重复、自我纠正和检查者提示如何处理。由研究者明确，系统不代替作决定。"></textarea>
+<label for="review-notes">核查备注</label><textarea id="review-notes"></textarea>
+<label class="check"><input type="checkbox" id="gait-reviewed"><span>已核对参与者轨迹、关键点及步态时间窗；已处理可见跟踪错误。</span></label>
+<label class="check"><input type="checkbox" id="speech-reviewed"><span>已核对任务时间、参与者回答及逐条正确性；转录候选已整理为真实回答。</span></label>
+<div class="actions"><button class="secondary" id="save-review">保存核查草稿</button><button id="confirm-features">确认并生成特征</button></div>
+<p class="tip">输出实验性的图像空间步长、踝部事件间隔、语音特征及 QC。step=stride/2 为算法约束，不是独立物理验证。当前未建立足接触相位定义，stance/swing/double-support 三项留空，不自动送入分类模型。</p>
+<div class="downloads" id="video-downloads"></div>
+</div></div></div></section>
+<section class="panel reveal" id="demo" hidden><div class="grid"><div><h2>先运行一个完整示例</h2><p>80 位虚拟参与者，26 个候选特征。数据由独立随机生成器产生，无原始受试者记录。</p><p class="muted">一键体验同队列 domain ablation、训练折内特征选择，以及参与者级条件 bootstrap 区间。</p><div class="actions"><button id="demo-run">运行合成演示</button></div></div><div><div class="big-number">5 + 3</div><h3>五类特征组合，三个人口学子组合</h3><p class="muted">AdaBoost · RF · SVM (RBF) · DT<br>演示：3 折 × 2 次重复，200 次 bootstrap。<br>自己的数据：5 折 × 10 次重复，2,000 次 bootstrap。</p><div class="tip">演示指标只验证软件运行，不代表 ADualNet 的研究性能。</div></div></div></section>
+<section class="panel" id="data" hidden><div class="grid"><form id="analysis-form"><h2>接入你的 TUG-DT 特征表</h2><label for="file">CSV / XLSX · 每位参与者一行 · 最大 20 MB</label><input id="file" type="file" accept=".csv,.xlsx" hidden><div class="file-picker"><button type="button" class="secondary" id="file-pick">选择特征表</button><span id="file-name" aria-live="polite">未选择文件</span></div><label for="sheet">Excel 工作表名称或索引（CSV 忽略）</label><input id="sheet" value="0"><label for="measurement">测量版本（例如 siteA_reviewed_v1）</label><input id="measurement" required placeholder="为这批测量命名"><label for="outcome">标签定义（明确 0 和 1 代表什么）</label><input id="outcome" required placeholder="0 = …；1 = …"><div class="actions"><button type="button" class="secondary" id="validate">检查输入</button><button type="submit" id="analyze">开始分析</button></div></form><div><h3>需要哪些字段？</h3><p>参与者 ID、二分类 label，以及 3 个人口学、15 个步态、8 个语音任务特征。</p><p class="muted">支持 gender → sex、education → edu，以及 asymmetry 拼写映射。额外临床列不会自动用作输入。</p><div class="tip">列名相同不代表测量定义相同。请确认单位、正确回答评分规则、任务时间起点及单/双任务来源。历史稿件的测量溯源边界见包内文档。</div><div id="preflight" aria-live="polite"></div></div></div></section>
+<section class="panel" id="raw" hidden><div class="grid"><div><h2>从视频和录音开始</h2><p>在单独的识别环境安装 MMPose 与 WhisperX，并编辑本地 config.ini。工具沿用已有的逐步运行入口。</p><code class="command">python adualnet.py pipeline --config config.ini --step gait-recognition --dry-run
+python adualnet.py pipeline --config config.ini --step speech-recognition --dry-run</code><p class="muted">确认命令、模型权重和路径后，去掉 --dry-run 执行。GPU 与模型下载需求由识别环境决定。</p></div><div><h3>识别后的人工核查</h3><p>检查姿态追踪对象、关键点质量、帧率和空间单位。核查语音转录、说话人及回答时间，再标注回答正确性。</p><code class="command">python adualnet.py reviewed-speech --tasks tasks.csv --responses responses.csv --out reviewed_speech.csv</code><p class="tip">reviewed-speech 按人工注释计数，保留真实错误，不做预期序列吸附、计数下限或时间偏移。其新测量定义与历史稿件输入分版本保存。</p><p class="muted">详见 docs/toolkit_guide_zh.md 的输入模板与提取步骤。提取结果需人工核对并整理成同一张特征表。</p></div></div></section>
+<section class="result" id="run-area" hidden><h2>运行记录</h2><p id="status" role="status"></p><pre id="log"></pre><div id="downloads" class="downloads"></div><iframe id="report" title="ADualNet 汇总结果报告" hidden></iframe></section>
+<section class="capability-panel"><h2>研究模块与输出</h2><p class="muted">展示方法与测量边界，不预设新队列的模型性能。</p><div class="capability-grid">
+<article><span class="module-code">01 / POSE</span><h3>步态测量</h3><p>人体关键点、踝部事件估计、图像空间位移与时间特征，并保留技术 QC。</p><small>像素量不等于米制步长；足接触相位指标暂不提供。</small></article>
+<article><span class="module-code">02 / SPEECH</span><h3>语音任务</h3><p>转录经人工整理为真实回答，生成计数、正确率与首答延迟等八项指标。</p><small>保留真实错误；评分规则由研究者明确记录。</small></article>
+<article><span class="module-code">03 / MODELLING</span><h3>队列建模</h3><p>AdaBoost、RF、SVM、DT；训练折内筛选、特征域消融与条件 bootstrap 区间。</p><small>需独立的队列特征表；不会自动对单段视频给出诊断。</small></article>
+</div></section>
+<details class="workspace-guide"><summary>使用与数据处理说明</summary><p>先使用合成演示熟悉流程，再处理经授权的研究录像。请核对人物、关键点、任务时窗和逐条回答，记录评分规则，完成两项确认后导出。</p><p>远程识别会把视频和音频传至配置的服务器，两端均保留副本。研究用途，不提供临床诊断。</p><p>图像空间测量不等同于米制步长；足接触相位尚未建立，相关指标保持缺失。人工确认不代表生理准确性或临床有效性已获验证。</p></details>
+<footer class="page-footer"><p>输入与核查保存在本地 local_workspace；远程识别服务器也保留传输副本。公开代码包不包含这些数据。</p><span class="footer-note">可追溯测量 · 人工核查 · 研究用途</span></footer>
+</main></div>
+<script id="ui-translations" type="application/json">__UI_TRANSLATIONS__</script>
+<script src="/assets/ui_i18n.js?token=__LOCAL_TOKEN__"></script>
+<script src="/assets/workspace_ui.js?token=__LOCAL_TOKEN__"></script>
+<script>
+const token='__LOCAL_TOKEN__';let uploadId=null;let active=false;
+const $=id=>document.getElementById(id);
+const tr=I18n.tr, uiText=I18n.bind;
+async function api(path,data){const response=await fetch(path,{method:data===undefined?'GET':'POST',headers:{'Content-Type':'application/json','X-ADualNet-Token':token},body:data===undefined?undefined:JSON.stringify(data)});const value=await response.json();if(!response.ok)throw Error(value.error||'Request failed');return value;}
+document.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(b=>{const selected=b===button;b.setAttribute('aria-selected',String(selected));$(b.dataset.tab).hidden=!selected;});}));
+$('file-pick').onclick=()=>$('file').click();
+$('file').addEventListener('change',()=>{uploadId=null;lastInputReport=null;uiText('preflight','');const file=$('file').files[0];uiText('file-name',file?'{filename}':'未选择文件',file?{filename:file.name}:{});});
+async function upload(){if(uploadId)return uploadId;const file=$('file').files[0];if(!file)throw Error('请先选择特征表。');if(file.size>20*1024*1024)throw Error('文件必须小于 20 MB。');const suffix='.'+file.name.split('.').pop().toLowerCase();const response=await fetch('/api/upload',{method:'POST',headers:{'X-ADualNet-Token':token,'X-File-Type':suffix},body:file});const value=await response.json();if(!response.ok)throw Error(value.error);uploadId=value.upload_id;return uploadId;}
+let lastInputReport=null;
+function showInputReport(){if(!lastInputReport)return;uiText('preflight',lastInputReport.passed?'检查通过：{n} 位参与者。 {details}':'请修正：{n} 位参与者。 {details}',{n:lastInputReport.n_subjects,details:lastInputReport.errors.join(' ')});$('preflight').className=lastInputReport.passed?'tip':'error';}
+async function validate(){const upload_id=await upload();lastInputReport=await api('/api/validate',{upload_id,sheet:$('sheet').value});showInputReport();return lastInputReport;}
+$('validate').onclick=()=>validate().catch(error=>{uiText('preflight',error.message);$('preflight').className='error';});
+function busy(value){active=value;['demo-run','analyze','validate'].forEach(id=>$(id).disabled=value);}
+function errorState(error){$('run-area').hidden=false;uiText('status',error.message);$('status').className='error';busy(false);}
+async function run(data){if(active)return;busy(true);$('run-area').hidden=false;$('status').className='';uiText('status','正在启动。运行较长时，请在这里查看进度。');$('report').hidden=true;$('downloads').replaceChildren();$('log').textContent='';try{const value=await api('/api/run',data);poll(value.job_id);}catch(error){errorState(error);}}
+async function poll(id){try{const value=await api('/api/job/'+id);$('log').textContent=value.log;$('log').scrollTop=$('log').scrollHeight;if(value.state==='running'){uiText('status','模型分析运行中，请查看下方原始日志。');setTimeout(()=>poll(id),1500);return;}busy(false);if(value.state==='failed')throw Error('运行未完成，请查看下方日志，并修正输入或环境。');uiText('status','已完成。下方是完整报告，表格可用于后续统计与审阅。');$('report').src=value.report;$('report').hidden=false;for(const [file,label] of [['report.html','打开完整报告'],['analysis_tables.xlsx','下载结果表 XLSX'],['protocol.json','下载实验说明']]){const a=document.createElement('a');a.href='/runs/'+id+'/'+file+'?token='+token;uiText(a,label);a.target='_blank';a.rel='noopener';$('downloads').appendChild(a);}}catch(error){errorState(error);}}
+$('demo-run').onclick=()=>run({demo:true});
+$('analysis-form').onsubmit=async event=>{event.preventDefault();try{if(!(await validate()).passed)return;await run({upload_id:uploadId,sheet:$('sheet').value,measurement_version:$('measurement').value,outcome_definition:$('outcome').value});}catch(error){errorState(error);}};
+</script><script src="/assets/video_ui.js?token=__LOCAL_TOKEN__"></script></body></html>

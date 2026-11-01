@@ -5,7 +5,11 @@ column names unchanged.
 
 | Template | Use |
 | --- | --- |
-| `paper_modeling_dataset_template.xlsx/.csv` | Minimal paper reproduction. Fill this one table, set `paper_experiment.input_table`, then run `--step paper-experiments`. |
+| `toolkit_features_template.csv` | Browser toolkit: unique ID, label and the 26 candidate features, with one sex field. |
+| `toolkit_feature_dictionary.csv` | Domain list for the browser toolkit; record definitions/units in your study protocol. |
+| `reviewed_speech_tasks.csv` | Task boundaries on the recording timeline, in seconds. |
+| `reviewed_speech_responses.csv` | Human-reviewed participant responses, onset times and correctness. |
+| `paper_modeling_dataset_template.xlsx/.csv` | Minimal paper reproduction and domain ablation. Fill this one table, set `paper_experiment.input_table` and `domain_ablation.input_table`, then run `--step paper-experiments` and `--step domain-ablation`. |
 | `demo_template.xlsx/.csv` | Demographic/label table for the full gait-speech joint workflow. |
 | `gait_features_check_previous_template.xlsx/.csv` | `check_previous`-format gait feature table if you already have gait metrics. |
 

@@ -111,6 +111,26 @@ def main() -> None:
     )
     run_command(cmd, args.dry_run)
 
+    table2_input = out_dir / "classification" / "model_performance_table.csv"
+    table2_prefix = out_dir / "classification" / "table2_classification_performance"
+    table2_cmd = [
+        sys.executable,
+        str(Path(__file__).resolve().parent / "make_table2_classification.py"),
+        "--input",
+        str(table2_input),
+        "--out-prefix",
+        str(table2_prefix),
+        "--source-note",
+        (
+            "Repeated stratified five-fold cross-validation with ten repeats; "
+            "feature selection nested within each outer training fold; bootstrap 95% confidence intervals."
+        ),
+    ]
+    if table2_input.exists() or args.dry_run:
+        run_command(table2_cmd, args.dry_run)
+    else:
+        print(f"Skipping Table 2 generation because classification output was not found: {table2_input}")
+
 
 if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).resolve().parent))

@@ -1,0 +1,7 @@
+# Optional video preparation. FFmpeg/FFprobe must also be installed.
+-r requirements-toolkit.txt
+opencv-python>=4.8,<5
+# Install in a separate Python 3.10/3.11 environment if needed.
+faster-whisper>=1.1,<2
+# MMPose/MMCV/MMDetection/PyTorch require their own compatible environment.
+# Point mmpose.python in recognition.example.json to that environment's Python.

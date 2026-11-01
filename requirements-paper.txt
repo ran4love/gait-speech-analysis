@@ -3,4 +3,7 @@ pandas
 openpyxl
 scikit-learn
 matplotlib
+scipy
+seaborn
 shap
+xlsxwriter

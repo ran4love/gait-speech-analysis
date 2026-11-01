@@ -7,3 +7,9 @@ config.ini
 __pycache__/
 *.pyc
 .DS_Store
+local_workspace/
+dist/
+.venv/
+.pytest_cache/
+.coverage
+recognition.local.json

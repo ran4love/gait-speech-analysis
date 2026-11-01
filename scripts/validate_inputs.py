@@ -95,6 +95,19 @@ GAIT_FEATURES = [
     "double_support_times",
 ]
 
+SPEECH_DT_FEATURES = [
+    "Timecount_DT",
+    "Num_DT",
+    "Correct_Num_DT",
+    "Num_20s_DT",
+    "Correct_Num_20s_DT",
+    "Correct_persec_DT",
+    "ACC_DT",
+    "Timecount_DT_1stNum",
+]
+
+DOMAIN_DEMOGRAPHIC_FEATURES = ["age", "edu"]
+
 
 class Validator:
     def __init__(self) -> None:
@@ -200,6 +213,36 @@ def check_columns(
     where = f" sheet `{selected_sheet}`" if selected_sheet else ""
     if missing:
         v.fail(f"columns:{label}", f"Missing columns in {path}{where}: {missing}")
+    else:
+        v.ok(f"columns:{label}", f"All required columns present in {path}{where}.")
+
+
+def check_columns_with_alternatives(
+    v: Validator,
+    label: str,
+    path: Path,
+    required_columns: Iterable[str],
+    alternative_groups: Sequence[Sequence[str]],
+    sheet_name: str = "",
+) -> None:
+    if not path.exists():
+        v.fail(f"columns:{label}", f"Cannot inspect columns because file is missing: {path}")
+        return
+    try:
+        headers, selected_sheet = read_headers(path, sheet_name)
+    except Exception as exc:
+        v.fail(f"columns:{label}", f"Could not read header row from {path}: {exc}")
+        return
+    missing = [col for col in dict.fromkeys(required_columns) if col and col not in headers]
+    missing_alt = [list(group) for group in alternative_groups if not any(col in headers for col in group)]
+    where = f" sheet `{selected_sheet}`" if selected_sheet else ""
+    if missing or missing_alt:
+        parts = []
+        if missing:
+            parts.append(f"missing columns: {missing}")
+        if missing_alt:
+            parts.append(f"missing one-of column groups: {missing_alt}")
+        v.fail(f"columns:{label}", f"{path}{where}: " + "; ".join(parts))
     else:
         v.ok(f"columns:{label}", f"All required columns present in {path}{where}.")
 
@@ -342,6 +385,52 @@ def check_paper_experiment(v: Validator, cfg, base: Path) -> None:
         )
 
 
+def check_domain_ablation(v: Validator, cfg, base: Path) -> None:
+    if not cfg.has_section("domain_ablation"):
+        v.warn("config:domain_ablation", "No [domain_ablation] section found; skipping domain-ablation validation.")
+        return
+    input_table = get_path(cfg, base, "domain_ablation", "input_table")
+    sheet_name = cfg.get("domain_ablation", "sheet_name", fallback="age-edu")
+    label_col = cfg.get("domain_ablation", "label_col", fallback="label")
+    id_col = cfg.get("domain_ablation", "id_col", fallback="ID")
+    required = [id_col, label_col, *DOMAIN_DEMOGRAPHIC_FEATURES, *GAIT_FEATURES, *SPEECH_DT_FEATURES]
+    check_path(v, "domain_ablation.input_table", input_table, required=False)
+    if input_table.exists():
+        check_columns_with_alternatives(
+            v,
+            "domain_ablation.input_table",
+            input_table,
+            required,
+            alternative_groups=[["sex", "gender"]],
+            sheet_name=sheet_name,
+        )
+    else:
+        v.warn(
+            "template:domain_ablation",
+            "Use data/templates/paper_modeling_dataset_template.xlsx for the domain-ablation input table.",
+        )
+
+
+def check_figures(v: Validator, cfg, base: Path) -> None:
+    if not cfg.has_section("figures"):
+        v.warn("config:figures", "No [figures] section found; skipping figure-input validation.")
+        return
+    domain_dir = get_path(cfg, base, "figures", "domain_results_dir")
+    paper_dir = get_path(cfg, base, "figures", "paper_results_dir")
+    check_path(v, "figures.domain_results_dir", domain_dir, required=False)
+    check_path(v, "figures.paper_results_dir", paper_dir, required=False)
+    for label, path in [
+        ("figures.domain_ablation_performance", domain_dir / "domain_ablation_performance_table.csv"),
+        ("figures.domain_ablation_fold_metrics", domain_dir / "domain_ablation_fold_metrics.csv"),
+        ("figures.rf_shap_importance", paper_dir / "shap_importance_Random_Forest.csv"),
+        (
+            "figures.nested_selected_frequency",
+            paper_dir / "classification" / "nested_feature_selection" / "nested_selected_feature_frequency.csv",
+        ),
+    ]:
+        check_path(v, label, path, required=False)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate public gait-speech workflow inputs and environment.")
     parser.add_argument("--config", required=True)
@@ -353,6 +442,8 @@ def main() -> None:
 
     output_dir = get_path(cfg, base, "project", "output_dir", fallback="results")
     paper_out = get_path(cfg, base, "paper_experiment", "out_dir", fallback="results/paper_experiments")
+    domain_out = get_path(cfg, base, "domain_ablation", "out_dir", fallback="results/domain_ablation")
+    figures_out = get_path(cfg, base, "figures", "out_dir", fallback="results/figures")
     experiment_out = get_path(cfg, base, "experiment", "out_dir", fallback="results/experiments")
     gait_out = get_path(cfg, base, "gait", "gait_features_xlsx", fallback="results/gait_features/gait_features_check_previous_format.xlsx").parent
     speech_out = get_path(cfg, base, "speech", "task8_features_json", fallback="results/speech_features/task8_features.json").parent
@@ -373,6 +464,8 @@ def main() -> None:
     check_speech(v, cfg, base)
     check_experiment(v, cfg, base)
     check_paper_experiment(v, cfg, base)
+    check_domain_ablation(v, cfg, base)
+    check_figures(v, cfg, base)
 
     for label, path in [
         ("project.output_dir", output_dir),
@@ -380,6 +473,8 @@ def main() -> None:
         ("speech_features", speech_out),
         ("experiments", experiment_out),
         ("paper_experiments", paper_out),
+        ("domain_ablation", domain_out),
+        ("figures", figures_out),
     ]:
         check_writable_dir(v, label, path, args.dry_run)
 

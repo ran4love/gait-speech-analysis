@@ -189,7 +189,7 @@ Default command:
 python analyze_dual_task_cost_gait_speech.py \
   --demo-xlsx ../new\ data_check.xlsx \
   --gait-xlsx check_previous_format_pred_2025_adaptive.xlsx check_previous_format_new_2026_adaptive.xlsx \
-  --speech-xlsx /Users/Reese/Documents/my\ codex\ project/server_run_artifacts_20260311_89/20260120HL-ASR-v2-89-0306.xlsx \
+  --speech-xlsx data/speech_features/task08_09_features.xlsx \
   --speech-sheet TASK08-09 \
   --out-dir dual_task_cost_gait_speech_analysis \
   --target MoCA

@@ -23,6 +23,9 @@ STEP_ORDER = [
     "speech-features",
     "experiments",
     "paper-experiments",
+    "domain-ablation",
+    "figures",
+    "statistics",
 ]
 
 STEP_SCRIPT = {
@@ -33,6 +36,9 @@ STEP_SCRIPT = {
     "speech-features": ROOT / "scripts" / "extract_speech_features.py",
     "experiments": ROOT / "scripts" / "reproduce_experiments.py",
     "paper-experiments": ROOT / "scripts" / "reproduce_paper_experiments.py",
+    "domain-ablation": ROOT / "scripts" / "run_domain_ablation.py",
+    "figures": ROOT / "scripts" / "make_paper_figures.py",
+    "statistics": ROOT / "scripts" / "run_statistical_analysis.py",
 }
 
 

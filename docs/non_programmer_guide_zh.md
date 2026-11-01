@@ -71,6 +71,18 @@ python run_pipeline.py --config config.ini --step experiments
 python run_pipeline.py --config config.ini --step paper-experiments
 ```
 
+复现不同特征域贡献分析：
+
+```bash
+python run_pipeline.py --config config.ini --step domain-ablation
+```
+
+生成新版 Fig.4：
+
+```bash
+python run_pipeline.py --config config.ini --step figures
+```
+
 完整流程：
 
 ```bash
@@ -94,6 +106,8 @@ python run_pipeline.py --config config.ini --step all
 | `results/paper_experiments/classification/nested_feature_selection/` | 每一折只在 training set 内重新选特征的无泄漏 feature-selection 结果。 |
 | `results/paper_experiments/classification/confounder_adjustment/` | age-adjusted、education-adjusted、age+sex+education adjusted 模型和 AUROC 稳定性报告。 |
 | `results/paper_experiments/regression/` | 回归 Table 2 风格结果和图，和分类结果分开。 |
+| `results/domain_ablation/` | full-cohort within-task domain ablation、paired Delta AUROC、QC summary 和 source tables。 |
+| `results/figures/` | 新版 Fig.4：Model contribution and interpretability。 |
 
 
 ## 5. 重要提醒
@@ -103,5 +117,7 @@ MMPose 和 WhisperX 都依赖 GPU 环境，最容易出错的是 CUDA、PyTorch�
 Nested-selected features 是根据 nested feature selection 的训练折高频结果形成的固定主文特征表。严格无泄漏的“边选特征边评估”性能仍应优先报告 `classification/nested_feature_selection/` 下的结果，并阅读 `docs/feature_selection_protocol.md`。
 
 默认设置 `promote_nested_selection = yes` 时，`classification/model_performance_table.xlsx`、ROC、calibration 和 confusion matrix 会使用 nested held-out predictions，而不是固定特征表的普通 train-test split 结果。固定特征表结果会保留为 `fixed_panel_*` 文件，方便审计。
+
+Domain ablation 使用同一批 dual-task TUG-DT 数据比较 demographics-only、gait-only、speech-only、gait+speech 和 full model。它不是外部验证，也不是单任务验证；如果 demographics-only 的 AUROC 很高，解释时要强调 education 等人口学结构是重要边界。
 
 如果只想复现论文模型，不想重新跑 MMPose/WhisperX，请直接使用 `data/templates/paper_modeling_dataset_template.xlsx`，并阅读 `docs/minimal_paper_reproduction_zh.md`。

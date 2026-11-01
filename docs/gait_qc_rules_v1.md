@@ -179,14 +179,14 @@ QC 分两层:
 ## 6. 当前正式清洗逻辑
 
 当前脚本:
-- [clean_merged_gait_pred_pool.py](/Users/Reese/Documents/my codex project/gait/clean_merged_gait_pred_pool.py)
+- `clean_merged_gait_pred_pool.py` (historical private cleaning script; not included in this public package)
 
 当前正式输出:
-- [merged_gait_pred_2025_2026_cleaned.csv](/Users/Reese/Documents/my codex project/gait/merged_gait_pred_2025_2026_cleaned.csv)
-- [merged_gait_pred_2025_2026_analysis_ready_matched_demo.csv](/Users/Reese/Documents/my codex project/gait/merged_gait_pred_2025_2026_analysis_ready_matched_demo.csv)
+- `merged_gait_pred_2025_2026_cleaned.csv` (private derived output; not included)
+- `merged_gait_pred_2025_2026_analysis_ready_matched_demo.csv` (private derived output; not included)
 
 当前清洗摘要:
-- [merged_gait_pred_2025_2026_cleaning_summary.json](/Users/Reese/Documents/my codex project/gait/merged_gait_pred_2025_2026_cleaning_summary.json)
+- `merged_gait_pred_2025_2026_cleaning_summary.json` (private derived output; not included)
 
 ## 7. v1 结论
 
